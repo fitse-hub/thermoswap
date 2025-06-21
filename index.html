@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Temperature Converter</title>
+    <meta name="description" content="Futuristic temperature converter with advanced 3D visualizations">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Quantum Loading Screen -->
+    <div id="quantum-loader" class="quantum-loader">
+        <div class="loader-container">
+            <div class="quantum-ring">
+                <div class="ring-segment"></div>
+                <div class="ring-segment"></div>
+                <div class="ring-segment"></div>
+                <div class="ring-segment"></div>
+            </div>
+            <div class="quantum-core">
+                <div class="core-pulse"></div>
+                <div class="temperature-symbol">⚡</div>
+            </div>
+            <div class="loading-text">
+                <span class="loading-word">INITIALIZING</span>
+                <span class="loading-word">QUANTUM</span>
+                <span class="loading-word">CONVERTER</span>
+            </div>
+            <div class="progress-hexagon">
+                <div class="hex-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Background Canvas -->
+    <canvas id="quantum-canvas"></canvas>
+
+    <!-- Floating Control Hub -->
+    <div id="control-hub" class="control-hub">
+        <div class="hub-trigger">
+            <i class="fas fa-atom"></i>
+            <div class="pulse-ring"></div>
+        </div>
+        <div class="hub-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-cogs"></i> QUANTUM CONTROL</h3>
+                <button class="close-hub"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="control-grid">
+                <!-- Theme Matrix -->
+                <div class="control-section" data-aos="fade-up">
+                    <label><i class="fas fa-palette"></i> THEME MATRIX</label>
+                    <div class="theme-matrix">
+                        <div class="theme-hex active" data-theme="cyber-blue" style="background: conic-gradient(from 0deg, #00f5ff, #0080ff, #4169e1)"></div>
+                        <div class="theme-hex" data-theme="neon-purple" style="background: conic-gradient(from 0deg, #ff00ff, #8a2be2, #9400d3)"></div>
+                        <div class="theme-hex" data-theme="plasma-green" style="background: conic-gradient(from 0deg, #00ff41, #39ff14, #32cd32)"></div>
+                        <div class="theme-hex" data-theme="solar-orange" style="background: conic-gradient(from 0deg, #ff4500, #ff6347, #ffa500)"></div>
+                        <div class="theme-hex" data-theme="arctic-white" style="background: conic-gradient(from 0deg, #ffffff, #f0f8ff, #e6e6fa)"></div>
+                    </div>
+                </div>
+
+                <!-- Quantum Level -->
+                <div class="control-section" data-aos="fade-up" data-aos-delay="100">
+                    <label><i class="fas fa-atom"></i> QUANTUM LEVEL</label>
+                    <div class="quantum-slider">
+                        <input type="range" id="quantum-level" min="1" max="3" value="2" class="slider">
+                        <div class="slider-labels">
+                            <span>BASIC</span>
+                            <span>ADVANCED</span>
+                            <span>QUANTUM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimension Toggle -->
+                <div class="control-section" data-aos="fade-up" data-aos-delay="200">
+                    <label><i class="fas fa-moon"></i> DIMENSION</label>
+                    <div class="dimension-toggle">
+                        <input type="checkbox" id="dimension-switch">
+                        <label for="dimension-switch" class="toggle-switch">
+                            <span class="switch-track"></span>
+                            <span class="switch-thumb">
+                                <i class="fas fa-sun day-icon"></i>
+                                <i class="fas fa-moon night-icon"></i>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Data Export -->
+                <div class="control-section" data-aos="fade-up" data-aos-delay="300">
+                    <label><i class="fas fa-download"></i> DATA EXPORT</label>
+                    <div class="export-matrix">
+                        <button class="export-hex" data-format="pdf"><i class="fas fa-file-pdf"></i></button>
+                        <button class="export-hex" data-format="csv"><i class="fas fa-file-csv"></i></button>
+                        <button class="export-hex" data-format="json"><i class="fas fa-file-code"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Quantum Interface -->
+    <div class="quantum-interface">
+        <!-- Header Matrix -->
+        <header class="quantum-header" data-aos="fade-down">
+            <div class="header-glow"></div>
+            <h1 class="quantum-title">
+                <span class="title-matrix">QUANTUM</span>
+                <span class="title-core">TEMPERATURE</span>
+                <span class="title-matrix">CONVERTER</span>
+            </h1>
+            <div class="subtitle-stream">Advanced Multi-Dimensional Temperature Analysis</div>
+        </header>
+
+        <!-- Input Quantum Field -->
+        <section class="input-quantum-field" data-aos="zoom-in" data-aos-delay="200">
+            <div class="field-container">
+                <div class="quantum-input-zone">
+                    <div class="input-hologram">
+                        <input type="number" id="temp-input" class="quantum-input" placeholder="0" step="any">
+                        <div class="input-scanner"></div>
+                        <div class="hologram-grid"></div>
+                    </div>
+                    <div class="unit-selector-matrix">
+                        <select id="from-unit" class="quantum-select">
+                            <option value="celsius">CELSIUS [°C]</option>
+                            <option value="fahrenheit">FAHRENHEIT [°F]</option>
+                            <option value="kelvin">KELVIN [K]</option>
+                            <option value="rankine">RANKINE [°R]</option>
+                            <option value="reaumur">RÉAUMUR [°Ré]</option>
+                            <option value="newton">NEWTON [°N]</option>
+                            <option value="delisle">DELISLE [°De]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3D Temperature Sphere -->
+                <div class="temperature-sphere-container" data-aos="flip-left" data-aos-delay="400">
+                    <div class="sphere-housing">
+                        <div class="temperature-sphere" id="temp-sphere">
+                            <div class="sphere-core">
+                                <div class="core-temperature" id="core-temp">0°</div>
+                                <div class="temperature-particles"></div>
+                            </div>
+                            <div class="sphere-rings">
+                                <div class="ring ring-1"></div>
+                                <div class="ring ring-2"></div>
+                                <div class="ring ring-3"></div>
+                            </div>
+                            <div class="sphere-glow"></div>
+                        </div>
+                        <div class="sphere-base">
+                            <div class="base-lights">
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="light"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hexagonal Results Matrix -->
+        <section class="results-matrix" data-aos="fade-up" data-aos-delay="600">
+            <div class="matrix-container">
+                <div class="hex-grid">
+                    <div class="result-hex" data-unit="celsius">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">°C</div>
+                            <div class="unit-name">CELSIUS</div>
+                            <div class="unit-value" id="result-celsius">0.00</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-hex" data-unit="fahrenheit">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">°F</div>
+                            <div class="unit-name">FAHRENHEIT</div>
+                            <div class="unit-value" id="result-fahrenheit">32.00</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-hex" data-unit="kelvin">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">K</div>
+                            <div class="unit-name">KELVIN</div>
+                            <div class="unit-value" id="result-kelvin">273.15</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-hex" data-unit="rankine">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">°R</div>
+                            <div class="unit-name">RANKINE</div>
+                            <div class="unit-value" id="result-rankine">491.67</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-hex" data-unit="reaumur">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">°Ré</div>
+                            <div class="unit-name">RÉAUMUR</div>
+                            <div class="unit-value" id="result-reaumur">0.00</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-hex" data-unit="newton">
+                        <div class="hex-border"></div>
+                        <div class="hex-content">
+                            <div class="unit-symbol">°N</div>
+                            <div class="unit-name">NEWTON</div>
+                            <div class="unit-value" id="result-newton">0.00</div>
+                            <div class="hex-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quantum Data Stream -->
+        <section class="data-stream-section" data-aos="slide-up" data-aos-delay="800">
+            <div class="stream-header">
+                <h3><i class="fas fa-stream"></i> QUANTUM DATA STREAM</h3>
+                <button id="clear-stream" class="clear-stream-btn">
+                    <i class="fas fa-trash-alt"></i> PURGE DATA
+                </button>
+            </div>
+            <div class="data-stream" id="data-stream">
+                <div class="no-data">
+                    <i class="fas fa-satellite-dish"></i>
+                    <p>NO QUANTUM DATA DETECTED</p>
+                    <span>Begin temperature analysis to generate data stream</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Quantum Particles -->
+    <div id="quantum-particles"></div>
+
+    <!-- Holographic Notifications -->
+    <div id="holo-notifications"></div>
+
+    <!-- Energy Burst Effects -->
+    <div id="energy-effects"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
